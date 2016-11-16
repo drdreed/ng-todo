@@ -11,10 +11,21 @@ app.factory("ItemFactory", ($q, $http, FIREBASE_CONFIG) => {
                     items.push(response[key]);
                 });
                 resolve(items);
-            }).error(errorResponse => {
-                reject(errorResponse);
-            });
+            }).error(errorResponse => reject(errorResponse));
         });
     };
-    return {getItemList: getItemList};
+
+    const postNewItem = (newItem) => {
+        return $q((resolve, reject) => {
+            $http.post(`${FIREBASE_CONFIG.databaseURL}/items.json`,
+              JSON.stringify({
+                assignedTo: newItem.assignedTo,
+                isCompleted: newItem.isCompleted,
+                task: newItem.task
+              }))
+            .success(postResponse => resolve(postResponse))
+            .error(errorResponse => reject(errorResponse));
+        });
+    };
+    return {getItemList: getItemList, postNewItem: postNewItem};
 });
