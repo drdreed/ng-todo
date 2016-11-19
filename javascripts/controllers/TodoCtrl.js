@@ -31,4 +31,10 @@ app.controller("TodoCtrl", ($scope, ItemFactory) => {
             $scope.showListView = true;
         });
     };
+
+    $scope.deleteItem = (itemId) => {
+      ItemFactory.deleteItem(itemId).then(response => {
+        getItems();
+      });
+    };
 });
