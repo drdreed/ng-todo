@@ -27,5 +27,14 @@ app.factory("ItemFactory", ($q, $http, FIREBASE_CONFIG) => {
             .error(errorResponse => reject(errorResponse));
         });
     };
-    return {getItemList: getItemList, postNewItem: postNewItem};
+
+    const deleteItem = (itemId) => {
+      return $q((resolve, reject) => {
+        $http.delete(`${FIREBASE_CONFIG.databaseURL}/items/${itemId}.json`)
+        .success(deletedResponse => resolve(deletedResponse))
+        .error(errorResponse => reject(errorResponse));
+      });
+    };
+
+    return {getItemList: getItemList, postNewItem: postNewItem, deleteItem:deleteItem};
 });
