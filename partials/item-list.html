@@ -18,7 +18,7 @@
                 <input type="checkbox" ng-checked="item.isCompleted">
             </div>
             <div class="col-xs-9">
-                {{item.task}}
+                <a href="#/items/view/{{item.id}}">{{item.task}}</a>
             </div>
             <div class="col-xs-1">
                 {{item.assignedTo}}
@@ -38,7 +38,7 @@
                 <input type="checkbox" ng-checked="item.isCompleted">
             </div>
             <div class="col-xs-9">
-                {{item.task}}
+                <a href="#/items/view/{{item.id}}">{{item.task}}</a>
             </div>
             <div class="col-xs-1">
                 {{item.assignedTo}}
