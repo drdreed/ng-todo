@@ -15,7 +15,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-xs-1">
-                <input type="checkbox" ng-checked="item.isCompleted">
+                <input type="checkbox" ng-model="item.isCompleted" ng-change="inputChange(item)">
             </div>
             <div class="col-xs-9">
                 <a href="#/items/view/{{item.id}}">{{item.task}}</a>
@@ -35,7 +35,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-xs-1">
-                <input type="checkbox" ng-checked="item.isCompleted">
+                <input type="checkbox" ng-model="item.isCompleted" ng-change="inputChange(item)">
             </div>
             <div class="col-xs-9">
                 <a href="#/items/view/{{item.id}}">{{item.task}}</a>
