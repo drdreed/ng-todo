@@ -12,7 +12,7 @@ app.controller("ItemEditCtrl", function ($scope, $location, $routeParams, ItemFa
   $scope.addNewItem = () => {
     ItemFactory.editItem($scope.newTask).then(function (response) {
       $scope.newTask = {};
-      $location.url("/items,list");
+      $location.url("/items/list");
     });
   };
 });
