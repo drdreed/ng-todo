@@ -7,6 +7,9 @@ app.controller("NavCtrl", function($scope) {
     }, {
         name: "All Items",
         url: "#/items/list"
+    },{
+        name: "Auth",
+        url: "#/auth"
     }, {
         name: "New Item",
         url: "#/items/new"
