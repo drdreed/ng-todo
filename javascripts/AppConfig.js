@@ -1,7 +1,27 @@
 "use strict";
 
-app.run((FIREBASE_CONFIG) => {
+let isAuth = (AuthFactory) => new Promise((resolve, reject) => {
+  if(AuthFactory.isAuthenticated()){
+    resolve();
+  } else {
+    reject();
+  }
+});
+
+app.run(($rootScope, $location, FIREBASE_CONFIG, AuthFactory) => {
     firebase.initializeApp(FIREBASE_CONFIG);
+
+    $rootScope.$on('$routeChangeStart', (event, currRoute, prevRoute) => {
+      let logged = AuthFactory.isAuthenticated();
+      let appTo;
+      if(currRoute.originalPath) {
+        appTo = currRoute.originalPath.indexOf('/auth') !== -1;
+      }
+      if(!appTo && !logged){
+        event.preventDefault();
+        $location.url('/auth');
+      }
+    });
 });
 
 app.config($routeProvider => {
@@ -12,19 +32,28 @@ app.config($routeProvider => {
         })
         .when('/items/list', {
             templateUrl: 'partials/item-list.html',
-            controller: 'ItemListCtrl'
+            controller: 'ItemListCtrl',
+            resolve: {isAuth}
         })
         .when('/items/new', {
             templateUrl: 'partials/item-new.html',
-            controller: 'ItemNewCtrl'
+            controller: 'ItemNewCtrl',
+            resolve: {isAuth}
         })
         .when('/items/view/:id', {
             templateUrl: 'partials/item-view.html',
-            controller: 'ItemViewCtrl'
+            controller: 'ItemViewCtrl',
+            resolve: {isAuth}
         })
         .when('/items/edit/:id', {
             templateUrl: 'partials/item-new.html',
-            controller: 'ItemEditCtrl'
+            controller: 'ItemEditCtrl',
+            resolve: {isAuth}
         })
-        .otherwise('/items/list');
+        .when('/logout', {
+            templateUrl: 'partials/auth.html',
+            controller: 'AuthCtrl',
+            resolve: {isAuth}
+        })
+        .otherwise('/auth');
 });
